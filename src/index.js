@@ -1,14 +1,17 @@
+require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+const bodyParser=require('body-parser');
+const multer =require('multer');
 const route = require('./routes/route.js');
 const { default: mongoose } = require('mongoose');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(multer().any());
+app.use(bodyParser.urlencoded({ extended: true}))
 
-mongoose.connect("mongodb+srv://plutonium-co:Y7XVLNecywgcT8ky@cluster0.ognlwhp.mongodb.net/group58Database", {
-   
-})
+
+mongoose.connect(process.env.DATABASE_URL)
 .then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) )
 

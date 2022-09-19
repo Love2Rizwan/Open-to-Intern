@@ -21,6 +21,7 @@ const college = async function (req, res) {
 // =================================Get-CollegeDetails Api=============================
 
 const getcollegeDetails = async function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin','*')
     try {
        
         let collegeName = req.query.collegeName;
@@ -33,9 +34,10 @@ const getcollegeDetails = async function (req, res) {
             return res.status(400).send({ status: false, message: "No college found" });
             
         const interData = await internModel.find({ collegeId: college._id, isDeleted: false });
-        if (interData.length == 0) {
-            return res.status(404).send({ status: false, msg: "no such intern" })
-        }
+        
+        // if (interData.length == 0) {
+        //     return res.status(404).send({ status: false, msg: "no such intern" })
+        // }
         const interns = interData.map(intern => {
 
             return {
@@ -45,6 +47,7 @@ const getcollegeDetails = async function (req, res) {
                 mobile: intern.mobile
             }
         })
+        
 
         const collegeDetails = {
             name: college.name,
